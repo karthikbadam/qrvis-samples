@@ -1,0 +1,51 @@
+body {
+    font-family: Helvetica-Light, monospace;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+}
+
+h1 {
+    text-align: left;
+    margin-left: 100px;
+}
+
+svg {
+    padding: 30px;
+    padding-top: 120px;
+    border: 1px solid black;
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.barchart {
+    background: transparent;
+}
+
+.barchart rect {
+    stroke: white;
+    fill: #FF6666;
+}
+
+.barchart text {
+    fill: black;
+}
+
+path {
+    fill: #FF6666;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    stroke-width: 2px;
+    stroke: #ccc;
+    shape-rendering: crispEdges;
+}
