@@ -29,7 +29,7 @@ function QRGenerator(options) {
     var parentWidth = $("#" + _self.parentId).width();
     var parentHeight = $("#" + _self.parentId).height();
 
-    var offsetx = offset.left + parentWidth - 90;
+    var offsetx = offset.left + parentWidth - 70;
     var offsety = offset.top + 20;
 
     d3.select("#qr-" + _self.parentId)

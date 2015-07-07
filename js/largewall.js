@@ -33,7 +33,7 @@ $(document).ready(function () {
     var qrcode = new QRGenerator({
         width: 100,
         height: 100,
-        content: "blah blah change me",
+        content: "http://www.terpconnect.umd.edu/~sbadam/qrvis/reader.html",
         frames: 1,
         qrdelay: 100,
         parentId: "charts",
@@ -101,6 +101,8 @@ function createCountryBarChart() {
     var barH = height / ebc.length;
     var offL = 200;
 
+    var qrcontent = {};
+    
     barplotSvg = d3.select("#charts")
         .append('svg')
         .attr('id', 'ebc')
@@ -108,17 +110,25 @@ function createCountryBarChart() {
         .attr('width', offL + width)
         .attr('height', height);
 
+    qrcontent.type = "country";
+    
     var x = d3.scale.linear()
         .domain([0, d3.max(ebc, function (d) {
             return d.value;
         })])
         .range([0, width - 50]);
+    
+    qrcontent.xs = "linear";
+    qrcontent.xv = "value";
 
     var y = d3.scale.ordinal()
         .domain(ebc.map(function (d) {
             return d.key;
         }))
         .rangeBands([0, height]);
+    
+    qrcontent.ys = "ordinal";
+    qrcontent.yv = "key";
 
     var bar = barplotSvg.selectAll("g")
         .data(ebc)
@@ -126,6 +136,9 @@ function createCountryBarChart() {
         .attr("transform", function (d, i) {
             return "translate(" + offL + "," + i * barH + ")";
         });
+    
+    qrcontent.viz = {};
+    qrcontent.viz.t = 'offL + "," + i*barH';
 
     bar.append("rect")
         .attr("width", function (d) {
@@ -135,6 +148,8 @@ function createCountryBarChart() {
             return x(d.value);
         })
         .attr("height", barH - 1);
+    
+    qrcontent.viz.grp = "rect";
 
     bar.append("text")
         .attr("x", function (d) {
@@ -148,6 +163,8 @@ function createCountryBarChart() {
         .text(function (d) {
             return d.value;
         });
+    
+    qrcontent.viz.tick = "value";
 
     barplotSvg.selectAll("text.name")
         .data(ebc)
@@ -163,13 +180,15 @@ function createCountryBarChart() {
             return d.key;
         });
 
+    qrcontent.viz.data = "ebc";
+    qrcontent.viz.axisTick = "key";
 
     //making QR code 
 
     var qrcode = new QRGenerator({
         width: 100,
         height: 100,
-        content: "kfjsafhjahjkahfjhajkfdansmcnxmnbsfwehuiewhdshfkjshkjcxnjdjsajksfjksafndjkshfcnxjksjkahfjhajkfdansmcnxmnbsfwehuiewhdshfkjshkjcxnjdjsajksfjksafndjkshfcnxjk",
+        content: JSON.stringify(qrcontent),
         frames: 4,
         qrdelay: 100,
         parentId: "ebc"
@@ -179,6 +198,7 @@ function createCountryBarChart() {
 
 function createTimeChart() {
 
+    var qrcontent = {};
 
     ebd = d3.entries(ebd);
 
@@ -201,24 +221,37 @@ function createTimeChart() {
     timeplotSvg = d3.select("#charts")
         .append("svg")
         .attr('id', 'ebd')
+        .attr('class', 'linechart')
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    qrcontent.type = "time";
 
     var x = d3.time.scale()
         .range([0, width]);
+    
+    qrcontent.xs = "time";
 
     var y = d3.scale.linear()
         .range([height, 0]);
 
+    
+    qrcontent.ys = "linear";
+    
     x.domain(d3.extent(ebd, function (d) {
         return parseDate(d.key);
     }));
+    
+    
+    qrcontent.xv = "key";
 
     y.domain(d3.extent(ebd, function (d) {
         return d.value;
     }));
+    
+    qrcontent.yv = "value";
 
     //creates x and y axis
     var xAxis = d3.svg.axis()
@@ -240,6 +273,9 @@ function createTimeChart() {
         .y1(function (d) {
             return y(d.value);
         });
+    
+    qrcontent.viz = {};
+    qrcontent.viz.grp = "area";
 
     timeplotSvg.append("defs")
         .append("clipPath").attr("id", "clip")
@@ -251,7 +287,6 @@ function createTimeChart() {
         .attr("class", "linechart")
         .attr("width", width).attr("height", height);
 
-
     chartContainer.append("path")
         .attr("class", "area")
         .data([ebd])
@@ -259,7 +294,8 @@ function createTimeChart() {
         .attr("fill-opacity", 0.7)
         .attr("stroke", "transparent")
         .attr("stroke-width", "2px");
-
+    
+     qrcontent.viz.data = "ebd";
 
     //draws the axis   
     chartContainer.append("g")
@@ -275,14 +311,14 @@ function createTimeChart() {
         .attr("x", "5em")
         .attr("y", 20)
         .style("text-anchor", "end")
-        .text("Number of deaths");
-
+        .text("Cumulative number of victims");
+    
 
     //making QR code 
     var qrcode = new QRGenerator({
         width: 100,
         height: 100,
-        content: "kfjsafhjahjkahfjhajkfdansmcnxmnbsfwehuiewhdshfkjshkjcxnjdjsajksfjksafndjkshfcnxjksjkahfjhajkfdansmcnxmnbsfwehuiewhdshfkjshkjcxnjdjsajksfjksafndjkshfcnxjk",
+        content: JSON.stringify(qrcontent),
         frames: 4,
         qrdelay: 100,
         parentId: "ebd"
