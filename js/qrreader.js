@@ -19,10 +19,10 @@ var msg = null;
 var vidhtml = '<video id="v" autoplay></video>';
 var allLoaded = false;
 var counter = 0;
-var loader;
+var loader = null;
 
-var CAPTURE_DELAY = 80;
-var DECODE_DELAY = 75;
+var CAPTURE_DELAY = 150;
+var DECODE_DELAY = 130;
 
 function gotSources(sourceInfos) {
 
@@ -70,7 +70,17 @@ function initCanvas(w, h) {
 
     $('#readQR').click(function () {
 
+        $("#progressLoader").empty();
+        
+        loader = $("#progressLoader").percentageLoader({
+            width: 100,
+            height: 100
+
+        });
+
         decodeQR();
+
+        $('#readQR').hide();
 
     });
 }
@@ -229,11 +239,6 @@ function read(a) {
 
     if (msg == null) {
 
-        loader = $("#progressLoader").percentageLoader({
-            width: 50,
-            height: 50
-        });
-
         msg = [];
         for (var i = 0; i < total; i++) {
             msg.push({});
@@ -289,8 +294,12 @@ function read(a) {
         $('.qrdiv').show();
         window.stream.stop();
 
+        loader.setProgress(0);
+
         if (readQRContent != "")
             createVisualization(readQRContent);
+
+
 
     }
 }
@@ -431,12 +440,15 @@ function initiate() {
 
 $(document).ready(function () {
 
+    intializeData();
+
     $('#captureButton').hide();
 
     $('#captureButton').click(function () {
 
         $('#captureButton').hide();
         $('#analyzeButton').show();
+        $('#readQR').show();
         //$('.btn_small').show(); 
         //show video if not present
         if (!$('#outdiv').html()) {
@@ -451,6 +463,7 @@ $(document).ready(function () {
             readQRContent = "";
             initiate();
             $(".qrdiv").hide();
+
         }
 
     });
@@ -469,7 +482,7 @@ $(document).ready(function () {
         window.stream.stop();
 
         //if (readQRContent != "")
-            createVisualization(readQRContent);
+        createVisualization(readQRContent);
 
     });
 

@@ -32,7 +32,9 @@ var dataFile = "data/ebola.csv";
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
 
-$(document).ready(function () {
+//$(document).ready(function () {
+
+var intializeData = function() {
 
     deviceWidth = $(document).width();
     deviceHeight = $(document).height();
@@ -74,6 +76,7 @@ $(document).ready(function () {
 
         });
 
+        //createRadialPlot();
         //smallMultiples();
 
         //play around with dataOfInterest
@@ -92,10 +95,14 @@ $(document).ready(function () {
 
     });
 
-});
+}
+//);
 
 function createRadialPlot() {
 
+    if ($('#radial').length != 0) {
+        return;
+    }
 
     var ebcCopy = JSON.parse(JSON.stringify(ebc));;
 
@@ -103,7 +110,14 @@ function createRadialPlot() {
 
     for (var i = 0; i < keys.length; i++) {
 
-        ebcCopy[keys[i]] = Math.pow(ebcCopy[keys[i]], 0.25);
+        if (ebcCopy[keys[i]] > 100) {
+            ebcCopy[keys[i]] = Math.pow(ebcCopy[keys[i]], 0.6);
+
+        } else {
+
+            ebcCopy[keys[i]] = 20 + Math.pow(ebcCopy[keys[i]], 1.3);
+
+        }
     }
 
     var data = [{
@@ -131,6 +145,10 @@ function createRadialPlot() {
 
 function smallMultiples() {
 
+    if ($('#sm').length != 0) {
+        return;
+    }
+
     dataOfInterest.sort(function (a, b) {
         if (parseDate(b[dateCol]) == parseDate(a[dateCol])) return 0;
         if (parseDate(b[dateCol]) < parseDate(a[dateCol])) return 1;
@@ -153,8 +171,10 @@ function smallMultiples() {
     var contextWidth = width * 0.95;
 
 
+
     var svg = d3.select("#charts")
         .append("svg")
+        .attr("id", "sm")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
 
@@ -401,8 +421,6 @@ function createVisualization(qrcontent) {
         createRadialPlot();
 
     } else {
-
         smallMultiples();
-
     }
 }

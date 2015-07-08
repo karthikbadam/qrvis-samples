@@ -118,8 +118,8 @@ function createCountryBarChart() {
         })])
         .range([0, width - 50]);
     
-    qrcontent.xs = "linear";
-    qrcontent.xv = "value";
+    //qrcontent.xs = "linear";
+    qrcontent.x = "value";
 
     var y = d3.scale.ordinal()
         .domain(ebc.map(function (d) {
@@ -127,8 +127,8 @@ function createCountryBarChart() {
         }))
         .rangeBands([0, height]);
     
-    qrcontent.ys = "ordinal";
-    qrcontent.yv = "key";
+    //qrcontent.ys = "ordinal";
+    qrcontent.y = "key";
 
     var bar = barplotSvg.selectAll("g")
         .data(ebc)
@@ -138,7 +138,7 @@ function createCountryBarChart() {
         });
     
     qrcontent.viz = {};
-    qrcontent.viz.t = 'offL + "," + i*barH';
+    //qrcontent.viz.t = 'offL + "," + i*barH';
 
     bar.append("rect")
         .attr("width", function (d) {
@@ -164,7 +164,7 @@ function createCountryBarChart() {
             return d.value;
         });
     
-    qrcontent.viz.tick = "value";
+    //qrcontent.viz.tick = "value";
 
     barplotSvg.selectAll("text.name")
         .data(ebc)
@@ -180,8 +180,8 @@ function createCountryBarChart() {
             return d.key;
         });
 
-    qrcontent.viz.data = "ebc";
-    qrcontent.viz.axisTick = "key";
+    //qrcontent.viz.data = "ebc";
+    //qrcontent.viz.axisTick = "key";
 
     //making QR code 
 
@@ -189,8 +189,8 @@ function createCountryBarChart() {
         width: 100,
         height: 100,
         content: JSON.stringify(qrcontent),
-        frames: 4,
-        qrdelay: 100,
+        frames: 2,
+        qrdelay: 150,
         parentId: "ebc"
 
     });
@@ -232,26 +232,26 @@ function createTimeChart() {
     var x = d3.time.scale()
         .range([0, width]);
     
-    qrcontent.xs = "time";
+    //qrcontent.xs = "time";
 
     var y = d3.scale.linear()
         .range([height, 0]);
 
     
-    qrcontent.ys = "linear";
+    //qrcontent.ys = "linear";
     
     x.domain(d3.extent(ebd, function (d) {
         return parseDate(d.key);
     }));
     
     
-    qrcontent.xv = "key";
+    qrcontent.x = "key";
 
     y.domain(d3.extent(ebd, function (d) {
         return d.value;
     }));
     
-    qrcontent.yv = "value";
+    qrcontent.y = "value";
 
     //creates x and y axis
     var xAxis = d3.svg.axis()
@@ -295,7 +295,7 @@ function createTimeChart() {
         .attr("stroke", "transparent")
         .attr("stroke-width", "2px");
     
-     qrcontent.viz.data = "ebd";
+     //qrcontent.viz.data = "ebd";
 
     //draws the axis   
     chartContainer.append("g")
@@ -319,8 +319,8 @@ function createTimeChart() {
         width: 100,
         height: 100,
         content: JSON.stringify(qrcontent),
-        frames: 4,
-        qrdelay: 100,
+        frames: 2,
+        qrdelay: 150,
         parentId: "ebd"
 
     });

@@ -10,11 +10,26 @@ h1 {
     margin-left: 100px;
 }
 
+#disclaimer {
+
+    float: right;
+    margin-right: 50px;
+    font-size: 13px;
+}
+
 svg {
-    border: 1px solid lightgray;
     display: inline-block;
     margin-left: 2px;
     margin-bottom: 0px;
+}
+
+
+#radial {
+    border: 1px solid lightgray;
+}
+
+#sm {
+    border: 1px solid lightgray;
 }
 
 .barchart {
@@ -51,7 +66,9 @@ svg {
 
 path {
     fill: #FF6666;
-    fill-opacity: 0.8;
+    fill-opacity: 0.6;
+    stroke: #FF6666;
+    stroke-width: 2px;
 }
 
 .axis path,
@@ -68,39 +85,45 @@ path {
     shape-rendering: crispEdges;
 }
 
-
 #chart-container {
-	width: 1000px; 
-	margin: 0 auto 50px auto;
-	background: rgba(255,255,255,0.5);
-	box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
-	padding: 20px 30px;
+    width: 1000px;
+    margin: 0 auto 50px auto;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px;
 }
 
 #chart-container h2 {
-	color: #444;
-	margin: 0 0 10px;
-	font-weight: 300;
-	padding: 10px;
-	text-shadow: 0 1px 1px rgba(255,255,255,0.8);
-	font-size: 24px;
+    color: #444;
+    margin: 0 0 10px;
+    font-weight: 300;
+    padding: 10px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    font-size: 24px;
 }
 
-g.context g.axis path{ stroke-opacity: 0;}
-g.context g.axis line{ stroke-opacity: .1;}
+g.context g.axis path {
+    stroke-opacity: 0;
+}
 
-g.context g.brush rect.background{ fill: rgba(0,0,0,.1);}
+g.context g.axis line {
+    stroke-opacity: .1;
+}
+
+g.context g.brush rect.background {
+    fill: rgba(0, 0, 0, .1);
+}
+
 .brush .extent {
-	stroke: #fff;
-	fill-opacity: .125;
-	shape-rendering: crispEdges;
+    stroke: #fff;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
 }
 
-g.context rect.background{
-	fill: rgb(200,200,255);
-	visibility: visible !important;
+g.context rect.background {
+    fill: rgb(200, 200, 255);
+    visibility: visible !important;
 }
-
 
 .btn {
     width: 100%;
@@ -231,8 +254,6 @@ g.context rect.background{
     position: absolute;
     left: 10px;
     top: 20px;
-    width: 100px;
-    height: 100px;
 }
 
 #one {
